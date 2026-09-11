@@ -1,0 +1,25 @@
+
+Summary:
+  Total:	0.0000 secs
+  Slowest:	0.0000 secs
+  Fastest:	0.0000 secs
+  Average:	 NaN secs
+  Requests/sec:	+Inf
+  
+
+Response time histogram:
+
+
+Latency distribution:
+
+Details (average, fastest, slowest):
+  DNS+dialup:	0.0000 secs, 0.0000 secs, 0.0000 secs
+  DNS-lookup:	0.0000 secs, 0.0000 secs, 0.0000 secs
+  req write:	0.0000 secs, 0.0000 secs, 0.0000 secs
+  resp wait:	0.0000 secs, 0.0000 secs, 0.0000 secs
+  resp read:	0.0000 secs, 0.0000 secs, 0.0000 secs
+
+Status code distribution:
+
+
+

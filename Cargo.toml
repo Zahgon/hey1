@@ -1,0 +1,39 @@
+[package]
+name = "hey"
+version = "0.0.1"
+edition = "2021"
+rust-version = "1.75"
+description = "hey is a tiny program that sends some load to a web application."
+license = "Apache-2.0"
+repository = "https://github.com/rakyll/hey"
+
+# Mirrors Go's `package main` in hey.go -> the `hey` binary.
+[[bin]]
+name = "hey"
+path = "src/main.rs"
+
+# Mirrors Go's `package requester` -> importable library surface, so the
+# integration tests can drive `Work` exactly like requester_test.go does.
+[lib]
+name = "hey"
+path = "src/lib.rs"
+
+[dependencies]
+tokio = { version = "1", features = ["rt", "rt-multi-thread", "net", "time", "sync", "macros", "io-util", "signal"] }
+hyper = { version = "1", features = ["client", "http1", "http2"] }
+hyper-util = { version = "0.1", features = ["tokio"] }
+http-body-util = "0.1"
+bytes = "1"
+tokio-rustls = { version = "0.26", default-features = false, features = ["ring", "tls12"] }
+rustls = { version = "0.23", default-features = false, features = ["ring", "tls12", "std"] }
+rustls-pki-types = "1"
+flate2 = "1"
+base64 = "0.22"
+regex = "1"
+num_cpus = "1"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt", "rt-multi-thread", "net", "time", "sync", "macros", "io-util"] }
+hyper = { version = "1", features = ["server", "http1"] }
+hyper-util = { version = "0.1", features = ["tokio"] }
+http-body-util = "0.1"

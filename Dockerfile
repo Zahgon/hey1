@@ -1,4 +1,4 @@
-FROM golang:1.15 as build
+FROM rust:1.75 as build
 
 # Create appuser.
 # See https://stackoverflow.com/a/55757473/12429735
@@ -14,12 +14,16 @@ RUN adduser \
     "${USER}"
 
 RUN apt-get update && apt-get install -y ca-certificates
-RUN go get github.com/rakyll/hey
 
-# Build
-WORKDIR /go/src/github.com/rakyll/hey
-RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux go build -o /go/bin/hey hey.go
+# Build. A statically linked musl binary stands in for CGO_ENABLED=0, so the
+# final stage can stay on scratch as it does in the Go image.
+WORKDIR /src
+COPY Cargo.toml Cargo.lock ./
+COPY src ./src
+COPY tests ./tests
+RUN rustup target add x86_64-unknown-linux-musl \
+    && cargo build --release --target x86_64-unknown-linux-musl --bin hey \
+    && cp target/x86_64-unknown-linux-musl/release/hey /usr/local/bin/hey
 
 ###############################################################################
 # final stage
@@ -40,5 +44,5 @@ LABEL org.opencontainers.image.ref.name="${PACKAGE}" \
     org.opencontainers.image.licenses="Apache 2.0" \
     org.opencontainers.image.source="https://github.com/${PACKAGE}"
 
-COPY --from=build /go/bin/${APPLICATION} /hey
+COPY --from=build /usr/local/bin/hey /hey
 ENTRYPOINT ["/hey"]

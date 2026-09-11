@@ -7,16 +7,25 @@ tool at [tarekziade/boom](https://github.com/tarekziade/boom). Using the same na
 where binary name conflicts created confusion.
 To preserve the name for its original owner, we renamed this project to hey.
 
+This repository is a Rust port of [rakyll/hey](https://github.com/rakyll/hey).
+The command-line interface, the report format and the CSV output are
+byte-compatible with the Go original; see [MIGRATION.md](MIGRATION.md) for the
+mapping between the two trees and the handful of documented differences.
+
 ## Installation
 
-  - Linux (amd64): https://storage.googleapis.com/hey-releases/hey_linux_amd64
-  - macOS (amd64): https://storage.googleapis.com/hey-releases/hey_darwin_amd64
-  - Windows (amd64): https://storage.googleapis.com/hey-releases/hey_windows_amd64
+Build from source (Rust 1.75 or newer):
 
-### Package Managers
+```
+cargo build --release
+# binary at ./target/release/hey
+```
 
-macOS:
--  [Homebrew](https://brew.sh/) users can use `brew install hey`.
+Or install it onto your PATH:
+
+```
+cargo install --path .
+```
 
 ## Usage
 
